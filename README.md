@@ -1,1 +1,2 @@
-# r-p-s
+# Rock Paper and Scissors
+
