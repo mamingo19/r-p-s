@@ -1,3 +1,6 @@
+let playerScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     const randomNumber = Math.floor(Math.random() * 3);
     
@@ -10,35 +13,62 @@ function getComputerChoice() {
             return "scissors";
     }
 }
-let playerScore = 0;
-let computerScore = 0;
-function playRound(playerSelection, computerSelection){
+
+function playRound(playerSelection, computerSelection) {
     if(playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors'){
         return 'Invalid option!'
-    }
-    else if(playerSelection === computerSelection){
+    } else if(playerSelection === computerSelection){
         return `Draw, player: ${playerSelection}, computer: ${computerSelection}`;
-    }
-    else if(playerSelection === "scissors" && computerSelection === "paper"
+    } else if(playerSelection === "scissors" && computerSelection === "paper"
             ||playerSelection === "rock" && computerSelection === "scissors"
             ||playerSelection === "paper" && computerSelection === "rock"){
-        playerScore = playerScore + 1;
+        playerScore++;
         return `You Win!: ${playerSelection} beats ${computerSelection}`;
-    }
-    else{
-        computerScore = computerScore + 1;
-        return `You Lose!: ${computerSelection} beats ${playerSelection} `;
+    } else {
+        computerScore++;
+        return `You Lose!: ${computerSelection} beats ${playerSelection}`;
     }
 }
-    function playGame() {
-        for(let i = 0; i < 5; i++){
-            const computerSelection = getComputerChoice();
-            playerSelection = prompt("Choose your option rock, paper or scissor").toLowerCase();
-            playRound(playerSelection, computerSelection);
-            console.log(playRound(playerSelection, computerSelection));
-            console.log(`Player score is: ${playerScore/2} and computer score is: ${computerScore/2}`);
-        }
+
+function updateScore() {
+    document.getElementById('score').innerText = `Player score: ${playerScore} Computer score: ${computerScore}`;
+}
+
+function displayResult(result) {
+    document.getElementById('result').innerText = result;
+}
+
+function checkWinner() {
+    if (playerScore === 5) {
+        displayResult("Player wins the game!");
+    } else if (computerScore === 5) {
+        displayResult("Computer wins the game!");
     }
+}
 
-    playGame();
+document.getElementById('rock').addEventListener('click', function() {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'rock';
+    const result = playRound(playerSelection, computerSelection);
+    displayResult(result);
+    updateScore();
+    checkWinner();
+});
 
+document.getElementById('paper').addEventListener('click', function() {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'paper';
+    const result = playRound(playerSelection, computerSelection);
+    displayResult(result);
+    updateScore();
+    checkWinner();
+});
+
+document.getElementById('scissors').addEventListener('click', function() {
+    const computerSelection = getComputerChoice();
+    const playerSelection = 'scissors';
+    const result = playRound(playerSelection, computerSelection);
+    displayResult(result);
+    updateScore();
+    checkWinner();
+});
